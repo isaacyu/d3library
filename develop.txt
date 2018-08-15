@@ -1,0 +1,119 @@
+// to make link for direct use:
+// https://rawgit.com/
+
+
+link: https://bl.ocks.org/cjrd/6863459
+
+
+
+to do:
+
+	line: 621, set position
+	
+	set eventListener
+	
+	
+	15 aug
+		error in line 642 because dimension is empty
+		
+		it is empty because on line 593, it is created by 
+			thisGraph.circles.enter()
+            .append("g");
+			
+			what thisGraph is? is an object constructed by GraphCreator, with circle, nodes, ... as attribute
+			
+			but its rects attribute is empty.
+			
+			there must be something that circle has done but not rect.
+			
+			I find in line 581, it is updated:
+				thisGraph.circles = thisGraph.circles.data(thisGraph.nodes, function(d) {
+					return d.id;
+				});
+				thisGraph.circles.attr("transform", function(d) {
+					return "translate(" + d.x + "," + d.y + ")";
+				});
+				
+			what is the structure of a node?
+				in html, svg, g, g(2nd), g (many node), node or text
+			
+			why circles has enter, but not rects? (line 597: 
+			    var newGs = thisGraph.rects.enter()
+					.append("g");	
+		
+		newGs is not empty, but its members are "null"
+		
+    
+    14 aug
+		carify: what are standard steps of displaying circle, rects, edges
+
+		it seems I should add rect in create, not in update
+
+		how to get the information of "d" used in circle?
+        
+        
+    
+	14 aug
+		why dragging will make error in console, dimension with length 0?
+	
+	
+	13 aug
+		track index
+			I guess these are just setting of routine code
+				graph-creator.js, line 650: var graph = new GraphCreator(svg, nodes, edges,setting);
+				
+				graph-creator.js, line 5: var GraphCreator = function(svg, nodes, edges,setting)
+					constructor of graph
+				
+				graph-creator.js, line 25: var defs = svg.append('svg:defs');
+					svg is a svg tag (<svg> ... some code ... </svg>) created by d3 in line: 647
+					svg.append('svg:defs') will append 
+					
+					question: is svg equal to d3.svg?
+				
+			I guess this step tell how svg is draw:
+				graph-creator.js, line 654: graph.updateGraph();
+				
+			Steps are as follows:
+				graph-creator.js, line 512: GraphCreator.prototype.updateGraph = function() 
+			
+			* This line responsible for inserting circle
+			    graph-creator.js, line 586,7:     
+					newGs.append("circle")
+						.attr("r", String(consts.nodeRadius));
+				
+				After remove circle, the listener attached to circle also not added, hence the graph is not draggable now.
+				
+			* This line responsible for inserting text
+			    graph-creator.js, line 589-591:
+					newGs.each(function(d) {
+						thisGraph.insertTitleLinebreaks(d3.select(this), d.title);
+					});
+				
+			* I have modified the code, so that the function: thisGraph.insertTitleLinebreaks will return the dimension of the text
+				in line: 256, last line of "GraphCreator.prototype.insertTitleLinebreaks = function(gEl, title) {"
+			
+			* Since adding the text first then rect will make rect cover the text, I make a seperated function to get the width without really adding text
+			
+
+		Circle is conceptG?
+
+		
+	12 aug
+		Remove circle
+			Where does the code place circle?
+			Line 555 and few lines after
+			
+		not only circle, but text also removed
+			nodes is stored in line 623
+		
+		text are inserted in line 584
+
+	10 Aug
+		change node size by code
+			node size is contral by "consts.nodeRadius"
+			which is defined in line 192, GraphCreator.prototype.consts
+			I change it setting in graphSetting.js line 1
+		
+		replace circle by retangle
+			circle is added on
