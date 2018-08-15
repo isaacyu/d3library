@@ -6,10 +6,7 @@ link: https://bl.ocks.org/cjrd/6863459
 
 https://rawgit.com/isaacyu/d3library/edit/master/d3.v3.js
 https://rawgit.com/isaacyu/d3library/master/FileSaver.min.js
-https://rawgit.com/isaacyu/d3library/master/download-icon.png
-https://rawgit.com/isaacyu/d3library/master/graph-creator.css
-https://rawgit.com/isaacyu/d3library/master/trash-icon.png
-https://rawgit.com/isaacyu/d3library/master/download-icon.png
+
 
 to do:
 
